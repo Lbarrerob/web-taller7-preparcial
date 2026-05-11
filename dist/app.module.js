@@ -14,12 +14,26 @@ const auth_module_1 = require("./auth/auth.module");
 const calc_module_1 = require("./calc/calc.module");
 const finance_module_1 = require("./finance/finance.module");
 const bank_module_1 = require("./bank/bank.module");
+const typeorm_1 = require("@nestjs/typeorm");
+const account_entity_1 = require("./bank/entities/account.entity");
+const loan_entity_1 = require("./bank/entities/loan.entity");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [auth_module_1.AuthModule, calc_module_1.CalcModule, finance_module_1.FinanceModule, bank_module_1.BankModule],
+        imports: [
+            typeorm_1.TypeOrmModule.forRoot({
+                type: 'better-sqlite3',
+                database: 'banco.db',
+                entities: [account_entity_1.Account, loan_entity_1.Loan],
+                synchronize: true,
+            }),
+            auth_module_1.AuthModule,
+            calc_module_1.CalcModule,
+            finance_module_1.FinanceModule,
+            bank_module_1.BankModule
+        ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })
